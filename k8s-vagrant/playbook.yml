@@ -12,13 +12,15 @@
   become: true
   gather_facts: true
   roles:
+    # {{ common roles
     - components
     - docker
     - swap
     - cluster
+    - iptables
+    # }}
     - kubeadm
     - kubeconfig
-    - iptables
     - calico
     - token
 
@@ -26,9 +28,11 @@
   become: true
   gather_facts: true
   roles:
+    # {{ common roles
     - components
     - docker
     - swap
     - cluster
     - iptables
+    # }}
     - join
