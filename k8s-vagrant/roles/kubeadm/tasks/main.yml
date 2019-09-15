@@ -1,11 +1,2 @@
-- name: Pull images from Aliyun registry
-  shell: |
-    for i in `kubeadm config images list`; do 
-      imageName=${i#k8s.gcr.io/}
-      docker pull registry.aliyuncs.com/google_containers/$imageName
-      docker tag registry.aliyuncs.com/google_containers/$imageName k8s.gcr.io/$imageName
-      docker rmi registry.aliyuncs.com/google_containers/$imageName
-    done;
-
 - name: Initialize the Kubernetes cluster using kubeadm
   command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10" --pod-network-cidr=192.168.0.0/16

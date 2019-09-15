@@ -18,6 +18,7 @@
     - swap
     - cluster
     - iptables
+    - images
     # }}
     - kubeadm
     - kubeconfig
@@ -34,5 +35,6 @@
     - swap
     - cluster
     - iptables
+    - images
     # }}
     - join
