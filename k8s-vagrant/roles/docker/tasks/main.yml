@@ -16,7 +16,11 @@
   vars:
     packages:
     - docker-ce=18.06.2~ce~3-0~ubuntu
-    - containerd.io
+
+- name: Copy docker daemon.json
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
   notify:
     - docker status
 

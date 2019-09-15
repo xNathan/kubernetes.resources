@@ -1,2 +1,5 @@
 - name: docker status
-  service: name=docker state=started
+  systemd:
+    name: docker
+    state: started
+    daemon_reload: yes
