@@ -16,7 +16,6 @@
     - docker
     - swap
     - cluster
-    - kubelet
     - kubeadm
     - kubeconfig
     - iptables
@@ -31,6 +30,5 @@
     - docker
     - swap
     - cluster
-    - kubelet
     - iptables
     - join
