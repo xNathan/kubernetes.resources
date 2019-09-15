@@ -21,8 +21,12 @@
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
-  notify:
-    - docker status
+
+- name: Restart docker daemon
+  systemd:
+    name: docker
+    state: started
+    daemon_reload: yes
 
 - name: Add vagrant user to docker group
   user:
