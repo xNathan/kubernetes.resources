@@ -1,3 +1,9 @@
+- name: Replace apt sourcelist
+  template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
+    backup: yes
+
 - name: Install packages that allow apt to be used over HTTPS
   apt:
     name: "{{ packages }}"
