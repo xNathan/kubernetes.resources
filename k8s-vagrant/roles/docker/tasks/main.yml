@@ -25,7 +25,7 @@
 - name: Restart docker daemon
   systemd:
     name: docker
-    state: started
+    state: restarted
     daemon_reload: yes
 
 - name: Add vagrant user to docker group
