@@ -1,3 +1,14 @@
+- name: Download calico.yaml
+  get_url:
+    url: "{{ calico_config }}"
+    dest: /tmp/calico.yaml
+
+- name: Replace calico
+  replace:
+    dest: /tmp/calico.yaml
+    regexp: "192.168.0.0/16"
+    replace: "{{ network_cidr }}"
+
 - name: Install calico pod network
   become: false
-  shell: kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
+  command: kubectl apply -f /tmp/calico.yaml
