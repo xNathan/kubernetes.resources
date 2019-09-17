@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+IMAGE_NAME = "generic/ubuntu1604"
+N = 2
+
+Vagrant.configure("2") do |config|
+    config.ssh.insert_key = false
+
+    # Libvirt configuration
+    config.vm.provider "libvirt" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+      
+    # K8s master configuration
+    config.vm.define "k8s-master" do |master|
+        master.vm.box = IMAGE_NAME
+        master.vm.network "private_network", ip: "192.168.80.10"
+        master.vm.hostname = "k8s-master"
+
+        # Libvirt configuration
+        master.vm.provider "libvirt" do |v|
+            v.cpus = 2
+        end
+    end
+
+    # K8s worker configuration
+    (1..N).each do |i|
+        config.vm.define "k8s-node-#{i}" do |node|
+            node.vm.box = IMAGE_NAME
+            node.vm.network "private_network", ip: "192.168.80.#{i + 10}"
+            node.vm.hostname = "k8s-node-#{i}"
+        end
+    end
+
+
+    # Ignore generic boxes' hard-coded DNS server
+    config.vm.provision "shell", inline: <<-SHELL
+        sed -i "/^dns-nameserver/s//#&/" /etc/network/interfaces
+        ifdown eth0 && ifup eth0
+    SHELL
+
+    # config.vm.provision "ansible_local" do |ansible|
+    #     ansible.config_file = "ansible.cfg"
+    #     ansible.playbook = "playbook.yml"
+    #     ansible.groups = {
+    #         masters: ["k8s-master"],
+    #         nodes: ["k8s-node-1","k8s-node-2"]
+    #     }
+    # end
+
+end
