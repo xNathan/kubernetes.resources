@@ -1,16 +1,16 @@
-- name: create .kube directory (vagrant user)
+- name: create .kube directory
   file:
-    path: /home/vagrant/.kube
+    path: "/home/{{ ansible_user }}/.kube"
     state: directory
-    owner: vagrant
-    group: vagrant
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: 0770
 
-- name: copy kubernetes config (vagrant user)
+- name: copy kubernetes config
   copy:
     src: /etc/kubernetes/admin.conf
-    dest: /home/vagrant/.kube/config
-    owner: vagrant
-    group: vagrant
+    dest: "/home/{{ ansible_user}}/.kube/config"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: 0770
     remote_src: yes
